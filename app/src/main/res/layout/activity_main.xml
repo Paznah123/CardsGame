@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:gravity="center"
+    android:background="@drawable/background"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="125dp"
+        android:layout_marginBottom="130dp"
+        android:translationX="-280dp"
+        app:srcCompat="@drawable/player1" />
+
+    <TextView
+        android:id="@+id/main_TXT_leftScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationX="-100dp"
+        android:textSize="50sp"
+        />
+
+    <TextView
+        android:id="@+id/main_TXT_rightScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationX="170dp"
+        android:textSize="50sp"
+        />
+
+    <ImageView
+        android:id="@+id/main_BTN_play"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:translationY="250dp"
+        app:srcCompat="@drawable/play" />
+
+    <ImageView
+        android:id="@+id/main_IMG_leftCard"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="125dp"
+        android:translationX="-75dp"
+        android:layout_marginBottom="130dp" />
+
+    <ImageView
+        android:id="@+id/main_IMG_rightCard"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="125dp"
+        android:layout_marginBottom="130dp"
+        android:translationX="75dp" />
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="125dp"
+        android:layout_marginBottom="130dp"
+        android:translationX="280dp"
+        app:srcCompat="@drawable/player2" />
+
+</RelativeLayout>
+
