@@ -1,0 +1,45 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gameover"
+    tools:context=".WinnerActivity">
+
+    <TextView
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Scores"
+        android:textStyle="bold"
+        android:textSize="60sp" />
+
+    <TextView
+        android:id="@+id/winner_TXT_leftFinalScore"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="240dp"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/winner_TXT_rightFinalScore"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="370dp"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/winner_TXT_theWinnerIs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:textColor="@color/white"
+        android:textSize="40sp" />
+
+</RelativeLayout>

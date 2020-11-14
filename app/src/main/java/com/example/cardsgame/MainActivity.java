@@ -3,10 +3,14 @@ package com.example.cardsgame;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
+import android.view.Surface;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,13 +18,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageView main_BTN_play;
+
+    ImageView main_IMG_rightPlayer;
+    ImageView main_IMG_leftPlayer;
 
     ImageView main_IMG_leftCard;
     ImageView main_IMG_rightCard;
@@ -30,9 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
     int leftScore = 0;
     int rightScore = 0;
+
     int leftCardVal = 0;
     int rightCardVal = 0;
+
     int cardsDealt = 0;
+    int currImg = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,28 +61,71 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Card> cardStack = initCardStack();
 
-        main_IMG_leftCard = findViewById(R.id.main_IMG_leftCard);
-        main_TXT_leftScore = findViewById(R.id.main_TXT_leftScore);
-        main_TXT_leftScore.setText(""+ leftScore);
+        main_IMG_leftPlayer = findViewById(R.id.main_IMG_leftPlayer);
+        main_IMG_rightPlayer = findViewById(R.id.main_IMG_rightPlayer);
 
+        main_IMG_leftCard = findViewById(R.id.main_IMG_leftCard);
         main_IMG_rightCard = findViewById(R.id.main_IMG_rightCard);
+
+        main_TXT_leftScore = findViewById(R.id.main_TXT_leftScore);
         main_TXT_rightScore = findViewById(R.id.main_TXT_rightScore);
+
+        main_TXT_leftScore.setText(""+ leftScore);
         main_TXT_rightScore.setText(""+ rightScore);
+
+        setBtnListener(main_IMG_leftPlayer);
+        setBtnListener(main_IMG_rightPlayer);
 
         main_BTN_play = findViewById(R.id.main_BTN_play);
 
-        main_BTN_play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(cardsDealt < 52) {
-                    clickPlayButton(cardStack);
-                }
-                else {
-                   displayWinnerMsg(leftScore,rightScore);
-                }
+        main_BTN_play.setOnClickListener(v -> {
+            if(cardsDealt < 52) {
+                clickPlayButton(cardStack);
+            }
+            else {
+                openWinnerActivity(leftScore, rightScore);
             }
         });
 
+    }
+    void openWinnerActivity(int leftScore, int rightScore) {
+        Intent myIntent = new Intent(this, WinnerActivity.class);
+        myIntent.putExtra("leftScore", leftScore);
+        myIntent.putExtra("rightScore", rightScore);
+        startActivity(myIntent);
+        finish();
+    }
+
+    // change player img listener
+    void setBtnListener(ImageView imgView){
+        imgView.setOnClickListener(v -> {
+            switch(currImg){
+                case 0:
+                    imgView.setImageResource(R.drawable.cat);
+                    currImg++;
+                    break;
+                case 1:
+                    imgView.setImageResource(R.drawable.dog);
+                    currImg++;
+                    break;
+                case 2:
+                    imgView.setImageResource(R.drawable.elephant);
+                    currImg++;
+                    break;
+                case 3:
+                    imgView.setImageResource(R.drawable.clown_fish);
+                    currImg++;
+                    break;
+                case 4:
+                    imgView.setImageResource(R.drawable.hen);
+                    currImg++;
+                    break;
+                case 5:
+                    imgView.setImageResource(R.drawable.owl);
+                    currImg = 0;
+                    break;
+            }
+        });
     }
 
     // called on click of play btn
@@ -90,33 +142,6 @@ public class MainActivity extends AppCompatActivity {
         main_IMG_leftCard.setImageResource(getResources().getIdentifier(leftCardName, "drawable", getPackageName()));
         main_IMG_rightCard.setImageResource(getResources().getIdentifier(rightCardName, "drawable", getPackageName()));
         cardsDealt += 2;
-    }
-
-    // called when all cards dealt - displays winner msg
-    private void displayWinnerMsg(int leftScore, int rightScore) {
-
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setTitle("Game-Over")
-                .setMessage(getGameWinner(leftScore, rightScore))
-                .setPositiveButton("Close", null)
-                .show();
-        alertDialog.setOnDismissListener(dialogInterface -> {
-            finish();
-        });
-    }
-
-    String getGameWinner(int leftScore, int rightScore){
-        String winnerMsg = "";
-
-        if(leftScore > rightScore)
-            winnerMsg = "Left Player won!";
-        else if(leftScore < rightScore)
-            winnerMsg = "Right Player won!";
-        else {
-            winnerMsg = "It's A Tie!";
-        }
-        return winnerMsg;
     }
 
     // gets random card from deck and returns imageName
@@ -160,14 +185,4 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    void dealCards(ArrayList<Card> cardStack, ArrayList<Card> playerACards,  ArrayList<Card> playerBCards){
-        int cardsDealt = 0;
-        for (int i = 0 ; i < 52 ; i++) {
-            if(cardsDealt % 2 == 0)
-                playerACards.add(cardStack.get(i));
-            else
-                playerBCards.add(cardStack.get(i));
-            cardsDealt++;
-        }
-    }
 }
