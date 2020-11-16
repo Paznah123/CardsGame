@@ -117,10 +117,6 @@ public class MainActivity extends AppCompatActivity {
                     currImg++;
                     break;
                 case 4:
-                    imgView.setImageResource(R.drawable.hen);
-                    currImg++;
-                    break;
-                case 5:
                     imgView.setImageResource(R.drawable.owl);
                     currImg = 0;
                     break;
