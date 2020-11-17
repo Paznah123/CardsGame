@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ public class WinnerActivity extends AppCompatActivity {
     TextView winner_TXT_leftScore;
     TextView winner_TXT_rightScore;
     TextView winnerMsg;
+
+    Button restart;
 
     int leftScore = 0;
     int rightScore = 0;
@@ -52,6 +55,16 @@ public class WinnerActivity extends AppCompatActivity {
 
         winnerMsg = findViewById(R.id.winner_TXT_theWinnerIs);
         winnerMsg.setText(getGameWinner(leftScore, rightScore));
+
+        restart = findViewById(R.id.winner_BTN_restart);
+        restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(WinnerActivity.this,MainActivity.class);
+                startActivity(myIntent);
+                finish();
+            }
+        });
     }
 
     String getGameWinner(int leftScore, int rightScore){

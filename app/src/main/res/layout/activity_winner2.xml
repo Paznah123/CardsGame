@@ -44,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignLeft="@+id/winner_TXT_rightFinalScore"
-        android:textSize="40sp" />
+            android:textStyle="bold"
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/winner_TXT_rightFinalScore"
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:paddingLeft="10dp"
+            android:textStyle="bold"
             android:textSize="40sp" />
     </LinearLayout>
     </RelativeLayout>
@@ -62,6 +64,19 @@
         android:layout_height="0dp"
         android:layout_weight="0.3"
         android:orientation="horizontal">
+    <Button
+        android:id="@+id/winner_BTN_restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Restart"
+        android:textStyle="bold"
+        android:backgroundTint="@color/black"
+        android:textSize="20sp">
+
+    </Button>
 
         <TextView
             android:id="@+id/winner_TXT_theWinnerIs"
@@ -71,6 +86,7 @@
             android:layout_centerHorizontal="true"
             android:paddingBottom="90dp"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:textSize="40sp" />
 
     </RelativeLayout>

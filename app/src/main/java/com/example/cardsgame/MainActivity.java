@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     int cardsDealt = 0;
     int currImg = 0;
 
+    boolean playClicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         main_BTN_play = findViewById(R.id.main_BTN_play);
 
         main_BTN_play.setOnClickListener(v -> {
+            if(cardsDealt == 0 )
+                playClicked = true;
             if(cardsDealt < 52) {
                 clickPlayButton(cardStack);
             }
@@ -99,27 +103,45 @@ public class MainActivity extends AppCompatActivity {
     // change player img listener
     void setBtnListener(ImageView imgView){
         imgView.setOnClickListener(v -> {
-            switch(currImg){
-                case 0:
-                    imgView.setImageResource(R.drawable.cat);
-                    currImg++;
-                    break;
-                case 1:
-                    imgView.setImageResource(R.drawable.dog);
-                    currImg++;
-                    break;
-                case 2:
-                    imgView.setImageResource(R.drawable.elephant);
-                    currImg++;
-                    break;
-                case 3:
-                    imgView.setImageResource(R.drawable.clown_fish);
-                    currImg++;
-                    break;
-                case 4:
-                    imgView.setImageResource(R.drawable.owl);
-                    currImg = 0;
-                    break;
+            if(!playClicked) {
+                switch (currImg) {
+                    case 0:
+                        imgView.setImageResource(R.drawable.ic_bull);
+                        currImg++;
+                        break;
+                    case 1:
+                        imgView.setImageResource(R.drawable.ic_cat);
+                        currImg++;
+                        break;
+                    case 2:
+                        imgView.setImageResource(R.drawable.ic_donkey);
+                        currImg++;
+                        break;
+                    case 3:
+                        imgView.setImageResource(R.drawable.ic_duck);
+                        currImg++;
+                        break;
+                    case 4:
+                        imgView.setImageResource(R.drawable.ic_jiraffe);
+                        currImg++;
+                        break;
+                    case 5:
+                        imgView.setImageResource(R.drawable.ic_snake);
+                        currImg++;
+                        break;
+                    case 6:
+                        imgView.setImageResource(R.drawable.ic_tiger);
+                        currImg++;
+                        break;
+                    case 7:
+                        imgView.setImageResource(R.drawable.ic_unicorn);
+                        currImg++;
+                        break;
+                    case 8:
+                        imgView.setImageResource(R.drawable.ic_zebra);
+                        currImg = 0;
+                        break;
+                }
             }
         });
     }
