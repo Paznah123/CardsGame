@@ -17,8 +17,7 @@ import android.widget.TextView;
 public class WinnerActivity extends AppCompatActivity {
 
 
-    TextView winner_TXT_leftScore;
-    TextView winner_TXT_rightScore;
+    TextView winner_LBL_score;
     TextView winnerMsg;
 
     Button restart;
@@ -39,12 +38,8 @@ public class WinnerActivity extends AppCompatActivity {
         int leftScore = intent.getIntExtra("leftScore",0);
         int rightScore = intent.getIntExtra("rightScore",0);
 
-
-        winner_TXT_rightScore = findViewById(R.id.winner_TXT_rightFinalScore);
-        winner_TXT_leftScore = findViewById(R.id.winner_TXT_leftFinalScore);
-
-        winner_TXT_rightScore.setText("Right: "+ rightScore);
-        winner_TXT_leftScore.setText("Left: "+ leftScore);
+        winner_LBL_score = findViewById(R.id.winner_TXT_rightFinalScore);
+        winner_LBL_score.setText("Right: "+ rightScore + " | "+ "Left: "+ leftScore);
 
         winnerMsg = findViewById(R.id.winner_TXT_theWinnerIs);
         winnerMsg.setText(getGameWinner(leftScore, rightScore));
@@ -57,9 +52,16 @@ public class WinnerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(WinnerActivity.this,MainActivity.class);
                 startActivity(myIntent);
+                mp.reset();
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //handler.removeCallbacks(runnable);
     }
 
     String getGameWinner(int leftScore, int rightScore){

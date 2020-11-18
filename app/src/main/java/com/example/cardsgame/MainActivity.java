@@ -101,14 +101,20 @@ public class MainActivity extends AppCompatActivity {
         main_TXT_leftScore.setText("" + leftScore);
         main_TXT_rightScore.setText("" + rightScore);
 
-        setBtnListener(main_IMG_leftPlayer);
-        setBtnListener(main_IMG_rightPlayer);
+        main_IMG_leftPlayer.setOnClickListener(setBtnListener(main_IMG_leftPlayer));
+        main_IMG_rightPlayer.setOnClickListener(setBtnListener(main_IMG_rightPlayer));
 
         main_BTN_play = findViewById(R.id.main_BTN_play);
 
         main_BTN_play.setOnClickListener(v -> {
-            if (!playClicked)
+            if (!playClicked) {
                 handler.postDelayed(runnable, 1000);
+                playClicked = true;
+            }else {
+                handler.removeCallbacks(runnable);
+                playClicked = false;
+            }
+
         });
     }
 
@@ -140,40 +146,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // change player img listener
-    void setBtnListener(ImageView imgView){
-        imgView.setOnClickListener(v -> {
-            if(!playClicked) {
-                switch (currImg) {
-                    case 0:
-                        setNewPlayerImg(imgView,R.drawable.ic_bull,1);
-                        break;
-                    case 1:
-                        setNewPlayerImg(imgView,R.drawable.ic_cat,1);
-                        break;
-                    case 2:
-                        setNewPlayerImg(imgView,R.drawable.ic_donkey,1);
-                        break;
-                    case 3:
-                        setNewPlayerImg(imgView,R.drawable.ic_duck,1);
-                        break;
-                    case 4:
-                        setNewPlayerImg(imgView,R.drawable.ic_jiraffe,1);
-                        break;
-                    case 5:
-                        setNewPlayerImg(imgView,R.drawable.ic_snake,1);
-                        break;
-                    case 6:
-                        setNewPlayerImg(imgView,R.drawable.ic_tiger,1);
-                        break;
-                    case 7:
-                        setNewPlayerImg(imgView,R.drawable.ic_unicorn,1);
-                        break;
-                    case 8:
-                        setNewPlayerImg(imgView,R.drawable.ic_zebra,0);
-                        break;
+    View.OnClickListener setBtnListener(ImageView imgView){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!playClicked) {
+                    switch (currImg) {
+                        case 0:
+                            setNewPlayerImg(imgView, R.drawable.ic_bull, 1);
+                            break;
+                        case 1:
+                            setNewPlayerImg(imgView, R.drawable.ic_cat, 1);
+                            break;
+                        case 2:
+                            setNewPlayerImg(imgView, R.drawable.ic_donkey, 1);
+                            break;
+                        case 3:
+                            setNewPlayerImg(imgView, R.drawable.ic_duck, 1);
+                            break;
+                        case 4:
+                            setNewPlayerImg(imgView, R.drawable.ic_jiraffe, 1);
+                            break;
+                        case 5:
+                            setNewPlayerImg(imgView, R.drawable.ic_snake, 1);
+                            break;
+                        case 6:
+                            setNewPlayerImg(imgView, R.drawable.ic_tiger, 1);
+                            break;
+                        case 7:
+                            setNewPlayerImg(imgView, R.drawable.ic_unicorn, 1);
+                            break;
+                        case 8:
+                            setNewPlayerImg(imgView, R.drawable.ic_zebra, 0);
+                            break;
+                    }
                 }
             }
-        });
+        };
     }
 
     void setNewPlayerImg(ImageView imgView, int id, int counter){

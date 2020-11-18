@@ -54,6 +54,7 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
             app:srcCompat="@drawable/backcard"/>
 
         <ImageView
