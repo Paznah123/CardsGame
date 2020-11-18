@@ -7,7 +7,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.Surface;
@@ -20,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,23 +50,44 @@ public class MainActivity extends AppCompatActivity {
 
     boolean playClicked = false;
 
+    ArrayList<Card> cardStack;
+
+    private Handler handler = new Handler();
+
+    MediaPlayer mp;
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(runnable, 1000);
+            if(cardsDealt == 0 ) {
+                playClicked = true;
+            }
+            if(cardsDealt < 52) {
+                playSound(R.raw.card_dealing);
+                clickPlayButton(cardStack);
+            } else
+                openWinnerActivity(leftScore, rightScore);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
-            View.SYSTEM_UI_FLAG_IMMERSIVE       // Set the content to appear under the system bars so that the
-            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE // content doesn't resize when the system bars hide and show.
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // Hide the nav bar and status bar
-            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                View.SYSTEM_UI_FLAG_IMMERSIVE       // Set the content to appear under the system bars so that the
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE // content doesn't resize when the system bars hide and show.
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // Hide the nav bar and status bar
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
         );
 
         setContentView(R.layout.activity_main);
 
-        ArrayList<Card> cardStack = initCardStack();
+        cardStack = initCardStack();
 
         main_IMG_leftPlayer = findViewById(R.id.main_IMG_leftPlayer);
         main_IMG_rightPlayer = findViewById(R.id.main_IMG_rightPlayer);
@@ -72,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
         main_TXT_leftScore = findViewById(R.id.main_TXT_leftScore);
         main_TXT_rightScore = findViewById(R.id.main_TXT_rightScore);
 
-        main_TXT_leftScore.setText(""+ leftScore);
-        main_TXT_rightScore.setText(""+ rightScore);
+        main_TXT_leftScore.setText("" + leftScore);
+        main_TXT_rightScore.setText("" + rightScore);
 
         setBtnListener(main_IMG_leftPlayer);
         setBtnListener(main_IMG_rightPlayer);
@@ -81,17 +107,30 @@ public class MainActivity extends AppCompatActivity {
         main_BTN_play = findViewById(R.id.main_BTN_play);
 
         main_BTN_play.setOnClickListener(v -> {
-            if(cardsDealt == 0 )
-                playClicked = true;
-            if(cardsDealt < 52) {
-                clickPlayButton(cardStack);
-            }
-            else {
-                openWinnerActivity(leftScore, rightScore);
+            if (!playClicked)
+                handler.postDelayed(runnable, 1000);
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void playSound(int rawSound) {
+        mp = MediaPlayer.create(this,rawSound);
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.reset();
+                mp.release();
+                mp = null;
             }
         });
-
+        mp.start();
     }
+
     void openWinnerActivity(int leftScore, int rightScore) {
         Intent myIntent = new Intent(this, WinnerActivity.class);
         myIntent.putExtra("leftScore", leftScore);
@@ -106,44 +145,43 @@ public class MainActivity extends AppCompatActivity {
             if(!playClicked) {
                 switch (currImg) {
                     case 0:
-                        imgView.setImageResource(R.drawable.ic_bull);
-                        currImg++;
+                        setNewPlayerImg(imgView,R.drawable.ic_bull,1);
                         break;
                     case 1:
-                        imgView.setImageResource(R.drawable.ic_cat);
-                        currImg++;
+                        setNewPlayerImg(imgView,R.drawable.ic_cat,1);
                         break;
                     case 2:
-                        imgView.setImageResource(R.drawable.ic_donkey);
-                        currImg++;
+                        setNewPlayerImg(imgView,R.drawable.ic_donkey,1);
                         break;
                     case 3:
-                        imgView.setImageResource(R.drawable.ic_duck);
-                        currImg++;
+                        setNewPlayerImg(imgView,R.drawable.ic_duck,1);
                         break;
                     case 4:
-                        imgView.setImageResource(R.drawable.ic_jiraffe);
-                        currImg++;
+                        setNewPlayerImg(imgView,R.drawable.ic_jiraffe,1);
                         break;
                     case 5:
-                        imgView.setImageResource(R.drawable.ic_snake);
-                        currImg++;
+                        setNewPlayerImg(imgView,R.drawable.ic_snake,1);
                         break;
                     case 6:
-                        imgView.setImageResource(R.drawable.ic_tiger);
-                        currImg++;
+                        setNewPlayerImg(imgView,R.drawable.ic_tiger,1);
                         break;
                     case 7:
-                        imgView.setImageResource(R.drawable.ic_unicorn);
-                        currImg++;
+                        setNewPlayerImg(imgView,R.drawable.ic_unicorn,1);
                         break;
                     case 8:
-                        imgView.setImageResource(R.drawable.ic_zebra);
-                        currImg = 0;
+                        setNewPlayerImg(imgView,R.drawable.ic_zebra,0);
                         break;
                 }
             }
         });
+    }
+
+    void setNewPlayerImg(ImageView imgView, int id, int counter){
+        imgView.setImageResource(id);
+        if(counter == 1)
+            currImg++;
+        if(counter == 0)
+            currImg = 0;
     }
 
     // called on click of play btn
@@ -152,10 +190,12 @@ public class MainActivity extends AppCompatActivity {
         String leftCardName = dealCard(cardStack, "left");
         String rightCardName = dealCard(cardStack, "right");
 
-        if(leftCardVal > rightCardVal)
+        if(leftCardVal > rightCardVal) {
             main_TXT_leftScore.setText(""+ ++leftScore);
-        if(leftCardVal < rightCardVal)
+        }
+        if(leftCardVal < rightCardVal) {
             main_TXT_rightScore.setText(""+ ++rightScore);
+        }
 
         main_IMG_leftCard.setImageResource(getResources().getIdentifier(leftCardName, "drawable", getPackageName()));
         main_IMG_rightCard.setImageResource(getResources().getIdentifier(rightCardName, "drawable", getPackageName()));

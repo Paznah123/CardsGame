@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
@@ -22,22 +23,14 @@ public class WinnerActivity extends AppCompatActivity {
 
     Button restart;
 
+    MediaPlayer mp;
+
     int leftScore = 0;
     int rightScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE       // Set the content to appear under the system bars so that the
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE // content doesn't resize when the system bars hide and show.
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // Hide the nav bar and status bar
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-        );
 
         setContentView(R.layout.activity_winner2);
 
@@ -55,6 +48,8 @@ public class WinnerActivity extends AppCompatActivity {
 
         winnerMsg = findViewById(R.id.winner_TXT_theWinnerIs);
         winnerMsg.setText(getGameWinner(leftScore, rightScore));
+
+        playSound(R.raw.victory_sound);
 
         restart = findViewById(R.id.winner_BTN_restart);
         restart.setOnClickListener(new View.OnClickListener() {
@@ -78,5 +73,18 @@ public class WinnerActivity extends AppCompatActivity {
             winnerMsg = "It's A Tie!";
         }
         return winnerMsg;
+    }
+
+    private void playSound(int rawSound) {
+        mp = MediaPlayer.create(this,rawSound);
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.reset();
+                mp.release();
+                mp = null;
+            }
+        });
+        mp.start();
     }
 }
