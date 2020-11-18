@@ -60,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             handler.postDelayed(runnable, 1000);
-            if(cardsDealt == 0 ) {
-                playClicked = true;
-            }
+
             if(cardsDealt < 52) {
                 playSound(R.raw.card_dealing);
                 clickPlayButton(cardStack);
@@ -101,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
         main_TXT_leftScore.setText("" + leftScore);
         main_TXT_rightScore.setText("" + rightScore);
 
-        main_IMG_leftPlayer.setOnClickListener(setBtnListener(main_IMG_leftPlayer));
-        main_IMG_rightPlayer.setOnClickListener(setBtnListener(main_IMG_rightPlayer));
+        setBtnListener(main_IMG_leftPlayer);
+        setBtnListener(main_IMG_rightPlayer);
 
         main_BTN_play = findViewById(R.id.main_BTN_play);
 
@@ -146,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // change player img listener
-    View.OnClickListener setBtnListener(ImageView imgView){
-        return new View.OnClickListener() {
+    void setBtnListener(ImageView imgView){
+        imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!playClicked) {
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        };
+        });
     }
 
     void setNewPlayerImg(ImageView imgView, int id, int counter){
