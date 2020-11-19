@@ -16,16 +16,15 @@ import android.widget.TextView;
 
 public class WinnerActivity extends AppCompatActivity {
 
-
     TextView winner_LBL_score;
     TextView winnerMsg;
 
-    Button restart;
-
-    MediaPlayer mp;
-
     int leftScore = 0;
     int rightScore = 0;
+
+    Button restart;
+
+    //=====================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +34,14 @@ public class WinnerActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        int leftScore = intent.getIntExtra("leftScore",0);
-        int rightScore = intent.getIntExtra("rightScore",0);
+        leftScore = intent.getIntExtra("leftScore", 0);
+        rightScore = intent.getIntExtra("rightScore", 0);
 
-        winner_LBL_score = findViewById(R.id.winner_TXT_rightFinalScore);
-        winner_LBL_score.setText("Right: "+ rightScore + " | "+ "Left: "+ leftScore);
+        winner_LBL_score = findViewById(R.id.winner_LBL_finalScore);
+        winner_LBL_score.setText("Left: " + leftScore + " | " + "Right: " + rightScore);
 
-        winnerMsg = findViewById(R.id.winner_TXT_theWinnerIs);
+        winnerMsg = findViewById(R.id.winner_LBL_theWinnerIs);
         winnerMsg.setText(getGameWinner(leftScore, rightScore));
-
-        playSound(R.raw.victory_sound);
 
         restart = findViewById(R.id.winner_BTN_restart);
         restart.setOnClickListener(new View.OnClickListener() {
@@ -52,17 +49,12 @@ public class WinnerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(WinnerActivity.this,MainActivity.class);
                 startActivity(myIntent);
-                mp.reset();
                 finish();
             }
         });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        //handler.removeCallbacks(runnable);
-    }
+    //===================================================
 
     String getGameWinner(int leftScore, int rightScore){
         String winnerMsg;
@@ -77,16 +69,4 @@ public class WinnerActivity extends AppCompatActivity {
         return winnerMsg;
     }
 
-    private void playSound(int rawSound) {
-        mp = MediaPlayer.create(this,rawSound);
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.reset();
-                mp.release();
-                mp = null;
-            }
-        });
-        mp.start();
-    }
 }

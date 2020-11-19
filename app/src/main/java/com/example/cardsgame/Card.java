@@ -1,7 +1,5 @@
 package com.example.cardsgame;
 
-import android.widget.ImageView;
-
 public class Card {
 
     int number;

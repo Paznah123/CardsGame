@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="names">
+        <item>@array/playerImages</item>
+        <item>@array/club</item>
+        <item>@array/diamond</item>
+        <item>@array/heart</item>
+        <item>@array/spade</item>
+    </array>
+
+    <array name="playerImages">
+        <item>@drawable/ic_donkey</item>
+        <item>@drawable/ic_bull</item>
+        <item>@drawable/ic_cat</item>
+        <item>@drawable/ic_duck</item>
+        <item>@drawable/ic_jiraffe</item>
+        <item>@drawable/ic_snake</item>
+        <item>@drawable/ic_tiger</item>
+        <item>@drawable/ic_unicorn</item>
+        <item>@drawable/ic_zebra</item>
+    </array>
+
+    <array name="diamond">
+        <item>@drawable/diamond2</item>
+        <item>@drawable/diamond3</item>
+        <item>@drawable/diamond4</item>
+        <item>@drawable/diamond5</item>
+        <item>@drawable/diamond6</item>
+        <item>@drawable/diamond7</item>
+        <item>@drawable/diamond8</item>
+        <item>@drawable/diamond9</item>
+        <item>@drawable/diamond10</item>
+        <item>@drawable/diamond11</item>
+        <item>@drawable/diamond12</item>
+        <item>@drawable/diamond13</item>
+        <item>@drawable/diamond14</item>
+    </array>
+
+    <array name="club">
+        <item>@drawable/club2</item>
+        <item>@drawable/club3</item>
+        <item>@drawable/club4</item>
+        <item>@drawable/club5</item>
+        <item>@drawable/club6</item>
+        <item>@drawable/club7</item>
+        <item>@drawable/club8</item>
+        <item>@drawable/club9</item>
+        <item>@drawable/club10</item>
+        <item>@drawable/club11</item>
+        <item>@drawable/club12</item>
+        <item>@drawable/club13</item>
+        <item>@drawable/club14</item>
+    </array>
+
+    <array name="heart">
+        <item>@drawable/heart2</item>
+        <item>@drawable/heart3</item>
+        <item>@drawable/heart4</item>
+        <item>@drawable/heart5</item>
+        <item>@drawable/heart6</item>
+        <item>@drawable/heart7</item>
+        <item>@drawable/heart8</item>
+        <item>@drawable/heart9</item>
+        <item>@drawable/heart10</item>
+        <item>@drawable/heart11</item>
+        <item>@drawable/heart12</item>
+        <item>@drawable/heart13</item>
+        <item>@drawable/heart14</item>
+    </array>
+
+    <array name="spade">
+        <item>@drawable/spade2</item>
+        <item>@drawable/spade3</item>
+        <item>@drawable/spade4</item>
+        <item>@drawable/spade5</item>
+        <item>@drawable/spade6</item>
+        <item>@drawable/spade7</item>
+        <item>@drawable/spade8</item>
+        <item>@drawable/spade9</item>
+        <item>@drawable/spade10</item>
+        <item>@drawable/spade11</item>
+        <item>@drawable/spade12</item>
+        <item>@drawable/spade13</item>
+        <item>@drawable/spade14</item>
+    </array>
+
+</resources>
